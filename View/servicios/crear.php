@@ -30,6 +30,7 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
   <div class="form-container">
     <h2>Crear Servicio</h2>
     <form method="POST" action="">
+<<<<<<< HEAD
       <label>Nombre del servicio:</label>
       <input type="text" name="nombre_servicio" required>
       <label>Descripción:</label>
@@ -47,4 +48,64 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
     <div class="back"><a href="index.php">← Volver a Servicios</a></div>
   </div>
 </body>
+=======
+  <!-- Nombre del Servicio -->
+  <label for="nombre_servicio">Nombre del servicio:</label>
+  <input 
+    type="text" 
+    id="nombre_servicio" 
+    name="nombre_servicio" 
+    required 
+    maxlength="100"
+    pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,\-]{4,100}$"
+    oninvalid="this.setCustomValidity('Debe contener entre 3 y 100 caracteres.')" 
+    oninput="this.setCustomValidity('')" 
+    title="Debe contener entre 3 y 100 caracteres.">
+     <!-- DESCRIPCIÓN -->
+<label for="descripcion">Descripción del servicio:</label>
+<textarea 
+  id="descripcion" 
+  name="descripcion" 
+  required 
+  minlength="10" 
+  maxlength="500" 
+  pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s\.,:;!¿?()\-]{10,500}$"
+  title="La descripción debe tener entre 10 y 500 caracteres. Se permiten letras, números, espacios y signos básicos de puntuación.">
+  <?= isset($data['descripcion']) ? htmlspecialchars($data['descripcion']) : '' ?>
+</textarea>
+
+      <!-- Precio -->
+      <label for="precio">Precio (COP):</label>
+      <input 
+        type="number" 
+        id="precio" 
+        name="precio" 
+        step="0.01" 
+        min="0" 
+        max="10000000" 
+        required
+        title="Ingresa un valor entre 0 y 10 millones.">
+
+
+<!-- PROVEEDOR -->
+<label for="proveedor_id">Proveedor:</label>
+<select id="proveedor_id" name="proveedor_id" required>
+  <option value="" disabled selected>Seleccione un proveedor</option>
+  <?php while($p = $prov->fetch_assoc()): ?>
+    <option value="<?= htmlspecialchars($p['id']) ?>">
+      <?= htmlspecialchars($p['nombre']) ?>
+    </option>
+  <?php endwhile; ?>
+</select>
+
+      <button type="submit">Guardar Servicio</button>
+    </form>
+
+    <div class="back">
+      <a href="index.php">← Volver a Servicios</a>
+    </div>
+  </div>
+</body>
+
+>>>>>>> main
 </html>

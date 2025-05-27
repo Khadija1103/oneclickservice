@@ -31,11 +31,21 @@ $result  = $ctrl->listar($busqueda);
 <body>
 <header><h1>One Click Service - Reservas</h1></header>
 <nav>
+<<<<<<< HEAD
   <a href="../../index.php">Inicio</a>
   <a href="../usuarios/index.php">Usuarios</a>
   <a href="../servicios/index.php">Servicios</a>
   <a href="../proveedores/index.php">Proveedores</a>
   <a href="#">Reservas</a>
+=======
+<div class="navbar">
+    <a href="http://localhost/oneclickservice-master/main.php">Inicio</a>
+    <a href="http://localhost/oneclickservice-master/index.php">Proveedores</a>
+    <a href="http://localhost/oneclickservice-master/View/usuarios/index.php">Usuarios</a>
+    <a href="http://localhost/oneclickservice-master/View/servicios/index.php">Servicios</a>
+  </div>
+
+>>>>>>> main
 </nav>
 <div class="container">
   <h2>Listado de Reservas</h2>

@@ -18,6 +18,25 @@ $result = $ctrl->listar();
       margin: 0;
       padding: 20px;
     }
+<<<<<<< HEAD
+=======
+    .navbar {
+      background-color: #007bff;
+      overflow: hidden;
+      padding: 10px 0;
+      text-align: center;
+    }
+    .navbar a {
+      display: inline-block;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .navbar a:hover {
+      background-color:rgb(120, 180, 239);
+    }
+>>>>>>> main
     h1 {
       text-align: center;
       color: #333;
@@ -51,7 +70,11 @@ $result = $ctrl->listar();
       text-align: center;
     }
     th {
+<<<<<<< HEAD
       background-color: #343a40;
+=======
+      background-color:rgb(47, 136, 220);
+>>>>>>> main
       color: white;
     }
     tr:nth-child(even) {
@@ -87,6 +110,19 @@ $result = $ctrl->listar();
   </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+
+  <div class="navbar">
+  <div class="navbar">
+    <a href="http://localhost/oneclickservice-master/main.php">Inicio</a>
+    <a href="http://localhost/oneclickservice-master/index.php">Proveedores</a>
+    <a href="http://localhost/oneclickservice-master/View/reservas/index.php">Reservas</a>
+    <a href="http://localhost/oneclickservice-master/View/servicios/index.php">Servicios</a>
+  </div>
+  </div>
+
+>>>>>>> main
   <h1>Lista de Usuarios</h1>
   <a href="crear.php" class="crear-btn">+ Crear Usuario</a>
 

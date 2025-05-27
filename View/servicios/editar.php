@@ -37,6 +37,7 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
 </head>
 <body>
   <div class="form-container">
+<<<<<<< HEAD
     <h2>Editar Servicio #<?=$id?></h2>
     <form method="POST" action="">
       <label>Nombre del servicio:</label>
@@ -58,4 +59,66 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
     <div class="back"><a href="index.php">← Volver a Servicios</a></div>
   </div>
 </body>
+=======
+    <h2>Editar Servicio #<?= htmlspecialchars($id) ?></h2>
+    <form method="POST" action="">
+      
+      <!-- Nombre del servicio -->
+      <label for="nombre_servicio">Nombre del servicio:</label>
+      <input 
+        type="text" 
+        id="nombre_servicio" 
+        name="nombre_servicio" 
+        required 
+        maxlength="100"
+        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,\-]{3,100}$" 
+        value="<?= htmlspecialchars($data['nombre_servicio']) ?>" 
+        oninvalid="this.setCustomValidity('Nombre inválido. Debe tener entre 3 y 100 caracteres.')" 
+        oninput="this.setCustomValidity('')" 
+        title="El nombre debe tener entre 3 y 100 caracteres. Se permiten letras, números, espacios, comas, puntos y guiones.">
+      
+      <!-- Descripción -->
+      <label for="descripcion">Descripción:</label>
+      <textarea 
+        id="descripcion" 
+        name="descripcion" 
+        required 
+        minlength="10" 
+        maxlength="500" 
+        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,:;!¿?()\-]{10,500}$" 
+        oninvalid="this.setCustomValidity('Debe tener entre 10 y 500 caracteres.')" 
+        oninput="this.setCustomValidity('')" 
+        title="La descripción debe tener entre 10 y 500 caracteres. Se permiten letras, números, espacios y signos básicos de puntuación."><?= htmlspecialchars($data['descripcion']) ?></textarea>
+      
+      <!-- Precio -->
+      <label for="precio">Precio (COP):</label>
+      <input 
+        type="number" 
+        id="precio" 
+        name="precio" 
+        step="0.01" 
+        min="0" 
+        max="10000000" 
+        value="<?= htmlspecialchars($data['precio']) ?>" 
+        required 
+        title="Ingresa un valor entre 0 y 10 millones.">
+      
+      <!-- Proveedor -->
+      <label for="proveedor_id">Proveedor:</label>
+      <select id="proveedor_id" name="proveedor_id" required>
+        <?php while($p = $prov->fetch_assoc()): ?>
+          <option value="<?= htmlspecialchars($p['id']) ?>" <?= $p['id'] == $data['proveedor_id'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($p['nombre']) ?>
+          </option>
+        <?php endwhile; ?>
+      </select>
+
+      <button type="submit">Actualizar Servicio</button>
+    </form>
+
+    <div class="back"><a href="index.php">← Volver a Servicios</a></div>
+  </div>
+</body>
+
+>>>>>>> main
 </html>

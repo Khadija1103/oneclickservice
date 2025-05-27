@@ -84,6 +84,7 @@ if (!$datos) { echo "Proveedor no encontrado."; exit; }
   </style>
 </head>
 <body>
+<<<<<<< HEAD
   <div class="form-container">
     <h1>Editar Proveedor #<?= $id ?></h1>
     <form method="POST" action="">
@@ -102,12 +103,70 @@ if (!$datos) { echo "Proveedor no encontrado."; exit; }
       <label>Tipo de Servicio:
         <input type="text" name="tipo_servicio" value="<?= htmlspecialchars($datos['tipo_servicio']) ?>" required>
       </label>
+=======
+<div class="form-container">
+    <h1>Editar Proveedor #<?= (int)$id ?></h1>
+    <form method="POST" action="">
+      <label for="nombre">Nombre:</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        value="<?= htmlspecialchars($datos['nombre']) ?>"
+        required
+        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}"
+        title="Mínimo 3 letras. Solo letras y espacios.">
+
+      <label for="correo">Correo:</label>
+      <input
+        type="email"
+        id="correo"
+        name="correo"
+        value="<?= htmlspecialchars($datos['correo']) ?>"
+        required>
+
+      <label for="telefono">Teléfono:</label>
+      <input
+        type="text"
+        id="telefono"
+        name="telefono"
+        value="<?= htmlspecialchars($datos['telefono']) ?>"
+        required
+        pattern="[0-9]{7,15}"
+        title="Solo números. Entre 7 y 15 dígitos.">
+
+      <label for="direccion">Dirección:</label>
+      <input
+        type="text"
+        id="direccion"
+        name="direccion"
+        value="<?= htmlspecialchars($datos['direccion']) ?>"
+        required
+        pattern="^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\.,#\-]{5,100}$"
+        title="Letras, números, espacios, comas, puntos, guiones y #. Mínimo 5 caracteres.">
+
+      <label for="tipo_servicio">Tipo de Servicio:</label>
+      <input
+        type="text"
+        id="tipo_servicio"
+        name="tipo_servicio"
+        value="<?= htmlspecialchars($datos['tipo_servicio']) ?>"
+        required
+        pattern=".{4,}"
+        title="Mínimo 4 caracteres.">
+
+>>>>>>> main
       <div class="actions">
         <button type="submit">Actualizar</button>
         <a href="../index.php" class="cancel">Cancelar</a>
       </div>
     </form>
   </div>
+<<<<<<< HEAD
+=======
+    </form>
+  </div>
+>>>>>>> main
 </body>
 </html>
 
