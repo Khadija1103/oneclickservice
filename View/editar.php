@@ -84,6 +84,26 @@ if (!$datos) { echo "Proveedor no encontrado."; exit; }
   </style>
 </head>
 <body>
+<<<<<<< HEAD
+  <div class="form-container">
+    <h1>Editar Proveedor #<?= $id ?></h1>
+    <form method="POST" action="">
+      <label>Nombre:
+        <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre']) ?>" required>
+      </label>
+      <label>Correo:
+        <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo']) ?>" required>
+      </label>
+      <label>Teléfono:
+        <input type="text" name="telefono" value="<?= htmlspecialchars($datos['telefono']) ?>" required>
+      </label>
+      <label>Dirección:
+        <input type="text" name="direccion" value="<?= htmlspecialchars($datos['direccion']) ?>" required>
+      </label>
+      <label>Tipo de Servicio:
+        <input type="text" name="tipo_servicio" value="<?= htmlspecialchars($datos['tipo_servicio']) ?>" required>
+      </label>
+=======
 <div class="form-container">
     <h1>Editar Proveedor #<?= (int)$id ?></h1>
     <form method="POST" action="">
@@ -135,14 +155,18 @@ if (!$datos) { echo "Proveedor no encontrado."; exit; }
         pattern=".{4,}"
         title="Mínimo 4 caracteres.">
 
+>>>>>>> main
       <div class="actions">
         <button type="submit">Actualizar</button>
         <a href="../index.php" class="cancel">Cancelar</a>
       </div>
     </form>
   </div>
+<<<<<<< HEAD
+=======
     </form>
   </div>
+>>>>>>> main
 </body>
 </html>
 

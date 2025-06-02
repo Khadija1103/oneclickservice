@@ -30,6 +30,17 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
     <h1>Crear Proveedor</h1>
     <form method="POST" action="">
       <label>Nombre:</label>
+<<<<<<< HEAD
+      <input type="text" name="nombre" required>
+      <label>Correo:</label>
+      <input type="email" name="correo" required>
+      <label>Teléfono:</label>
+      <input type="text" name="telefono" required>
+      <label>Dirección:</label>
+      <input type="text" name="direccion" required>
+      <label>Tipo de Servicio:</label>
+      <input type="text" name="tipo_servicio" required>
+=======
       <input type="text" name="nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}" title="Mínimo 3 letras. Solo letras y espacios.">
 
       <label>Correo:</label>
@@ -50,6 +61,7 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
       <label>Tipo de Servicio:</label>
       <input type="text" name="tipo_servicio" required pattern=".{4,}" title="Mínimo 4 caracteres.">
 
+>>>>>>> main
       <input type="submit" value="Guardar">
     </form>
     <div class="back-link">
@@ -57,7 +69,10 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
     </div>
   </div>
 </body>
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 </html>
 
 

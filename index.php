@@ -12,6 +12,20 @@ $result = $ctrl->listar($filtro);
   <meta charset="UTF-8">
   <title>Lista de Proveedores</title>
   <style>
+<<<<<<< HEAD
+    body { font-family: Arial; padding:20px; background:#f4f4f4; }
+    .btn { padding:10px 20px; background:#28a745; color:#fff; text-decoration:none; border-radius:5px; }
+    .btn:hover { background:#218838; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { padding:8px; border:1px solid #ddd; text-align:left; }
+    th { background:#28a745; color:#fff; }
+    form { margin-bottom:10px; display:inline-block; }
+  </style>
+</head>
+<body>
+  <h1>Proveedores</h1>
+  <a href="View/crear.php" class="btn">Crear Proveedor</a>
+=======
     body {
       font-family: Arial;
       padding: 20px;
@@ -79,11 +93,15 @@ $result = $ctrl->listar($filtro);
 
   <a href="View/crear.php" class="btn">Crear Proveedor</a>
 
+>>>>>>> main
   <form method="GET">
     <input type="text" name="buscar" value="<?= htmlspecialchars($filtro) ?>" placeholder="Buscar por nombre">
     <button type="submit">Buscar</button>
   </form>
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
   <table>
     <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Dirección</th><th>Tipo</th><th>Acciones</th></tr>
     <?php if ($result && $result->num_rows): ?>
@@ -105,6 +123,12 @@ $result = $ctrl->listar($filtro);
       <tr><td colspan="7">No hay proveedores registrados.</td></tr>
     <?php endif; ?>
   </table>
+<<<<<<< HEAD
+</body>
+</html>
+
+=======
 
 </body>
 </html>
+>>>>>>> main

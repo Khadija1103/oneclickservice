@@ -30,6 +30,25 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
   <div class="form-container">
     <h2>Crear Servicio</h2>
     <form method="POST" action="">
+<<<<<<< HEAD
+      <label>Nombre del servicio:</label>
+      <input type="text" name="nombre_servicio" required>
+      <label>Descripción:</label>
+      <textarea name="descripcion" required></textarea>
+      <label>Precio:</label>
+      <input type="number" name="precio" step="0.01" required>
+      <label>Proveedor:</label>
+      <select name="proveedor_id" required>
+        <?php while($p = $prov->fetch_assoc()): ?>
+          <option value="<?=$p['id']?>"><?=htmlspecialchars($p['nombre'])?></option>
+        <?php endwhile; ?>
+      </select>
+      <button type="submit">Guardar Servicio</button>
+    </form>
+    <div class="back"><a href="index.php">← Volver a Servicios</a></div>
+  </div>
+</body>
+=======
   <!-- Nombre del Servicio -->
   <label for="nombre_servicio">Nombre del servicio:</label>
   <input 
@@ -88,4 +107,5 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
   </div>
 </body>
 
+>>>>>>> main
 </html>

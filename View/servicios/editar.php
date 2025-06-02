@@ -37,6 +37,29 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
 </head>
 <body>
   <div class="form-container">
+<<<<<<< HEAD
+    <h2>Editar Servicio #<?=$id?></h2>
+    <form method="POST" action="">
+      <label>Nombre del servicio:</label>
+      <input type="text" name="nombre_servicio" value="<?=htmlspecialchars($data['nombre_servicio'])?>" required>
+      <label>Descripción:</label>
+      <textarea name="descripcion" required><?=htmlspecialchars($data['descripcion'])?></textarea>
+      <label>Precio:</label>
+      <input type="number" name="precio" step="0.01" value="<?=$data['precio']?>" required>
+      <label>Proveedor:</label>
+      <select name="proveedor_id" required>
+        <?php while($p = $prov->fetch_assoc()): ?>
+          <option value="<?=$p['id']?>" <?= $p['id']==$data['proveedor_id']?'selected':''?>>
+            <?=htmlspecialchars($p['nombre'])?>
+          </option>
+        <?php endwhile; ?>
+      </select>
+      <button type="submit">Actualizar Servicio</button>
+    </form>
+    <div class="back"><a href="index.php">← Volver a Servicios</a></div>
+  </div>
+</body>
+=======
     <h2>Editar Servicio #<?= htmlspecialchars($id) ?></h2>
     <form method="POST" action="">
       
@@ -97,4 +120,5 @@ $prov = $conn->query("SELECT id, nombre FROM proveedores");
   </div>
 </body>
 
+>>>>>>> main
 </html>

@@ -72,20 +72,36 @@ $ctrl->crearUsuario();
   </style>
 </head> 
 <body>
+<<<<<<< HEAD
+  <h1>Crear Usuario</h1>
+  <form method="POST" action="">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required>
+=======
 <h1>Crear Usuario</h1>
   <form method="POST" action="" onsubmit="return validarFormulario()">
     <label>Nombre:</label>
     <input type="text" name="nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}" title="Mínimo 3 letras. Solo se permiten letras y espacios.">
+>>>>>>> main
 
     <label>Correo:</label>
     <input type="email" name="correo" required>
 
     <label>Contraseña:</label>
+<<<<<<< HEAD
+    <input type="password" name="contrasena" required>
+=======
     <input type="password" name="contrasena" required pattern="(?=.*[A-Za-z])(?=.*\d).{6,}" title="Mínimo 6 caracteres. Debe contener al menos una letra y un número.">
 
+>>>>>>> main
 
     <button type="submit">Guardar</button>
   </form>
   <a href="index.php">← Volver a Usuarios</a>
 </body>
+<<<<<<< HEAD
 </html>
+
+=======
+</html>
+>>>>>>> main

@@ -18,6 +18,8 @@ $result = $ctrl->listar();
       margin: 0;
       padding: 20px;
     }
+<<<<<<< HEAD
+=======
     .navbar {
       background-color: #007bff;
       overflow: hidden;
@@ -34,6 +36,7 @@ $result = $ctrl->listar();
     .navbar a:hover {
       background-color:rgb(120, 180, 239);
     }
+>>>>>>> main
     h1 {
       text-align: center;
       color: #333;
@@ -67,7 +70,11 @@ $result = $ctrl->listar();
       text-align: center;
     }
     th {
+<<<<<<< HEAD
+      background-color: #343a40;
+=======
       background-color:rgb(47, 136, 220);
+>>>>>>> main
       color: white;
     }
     tr:nth-child(even) {
@@ -103,6 +110,8 @@ $result = $ctrl->listar();
   </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
 
   <div class="navbar">
   <div class="navbar">
@@ -113,6 +122,7 @@ $result = $ctrl->listar();
   </div>
   </div>
 
+>>>>>>> main
   <h1>Lista de Usuarios</h1>
   <a href="crear.php" class="crear-btn">+ Crear Usuario</a>
 

@@ -43,6 +43,14 @@ $result = $ctrl->listar($busqueda);
   </style>
 </head>
 <body>
+<<<<<<< HEAD
+  <div class="navbar">
+    <a href="../../index.php">Inicio</a>
+    <a href="../proveedores/index.php">Proveedores</a>
+    <a href="../usuarios/index.php">Usuarios</a>
+    <a href="../reservas/index.php">Reservas</a>
+    <a href="#">Servicios</a>
+=======
 <div class="navbar">
 <div class="navbar">
     <a href="http://localhost/oneclickservice-master/main.php">Inicio</a>
@@ -50,6 +58,7 @@ $result = $ctrl->listar($busqueda);
     <a href="http://localhost/oneclickservice-master/View/usuarios/index.php">Usuarios</a>
     <a href="http://localhost/oneclickservice-master/View/reservas/index.php">Reservas</a>
   
+>>>>>>> main
   </div>
 
   <header><h1>One Click Service – Servicios</h1></header>
