@@ -1,0 +1,48 @@
+Librerías y Frameworks Utilizados en el Proyecto OneClickService
+1. Frontend
+React.js
+Framework de JavaScript para construir interfaces de usuario dinámicas y reutilizables con componentes.
+Beneficios: Alta performance, desarrollo modular, comunidad amplia.
+
+Bootstrap
+Framework CSS para estilos rápidos y responsivos, con componentes predefinidos para diseño adaptativo.
+Beneficios: Facilita la creación de UI atractivas y compatibles con móviles.
+
+Axios
+Cliente HTTP para hacer solicitudes API desde el frontend.
+Beneficios: Fácil manejo de peticiones asíncronas y promesas.
+
+2. Backend
+Node.js
+Entorno de ejecución para JavaScript del lado del servidor.
+Beneficios: Manejo eficiente de I/O, ideal para aplicaciones en tiempo real.
+
+Express.js
+Framework minimalista para Node.js que facilita la creación de APIs REST.
+Beneficios: Sencillez, middleware personalizable, comunidad amplia.
+
+MongoDB
+Base de datos NoSQL orientada a documentos.
+Beneficios: Flexibilidad en el esquema, escalabilidad, integración con Node.js.
+
+Mongoose
+Librería ODM para MongoDB que permite modelar datos en Node.js.
+Beneficios: Validaciones, middleware, consultas simplificadas.
+
+3. Autenticación y Seguridad
+JWT (JSON Web Tokens)
+Para manejo de autenticación y autorización segura mediante tokens.
+Beneficios: Stateless, escalable y ampliamente soportado.
+
+bcrypt.js
+Para el hash y verificación de contraseñas.
+Beneficios: Seguridad en almacenamiento de credenciales.
+
+4. Herramientas de Desarrollo
+Git
+Control de versiones distribuido para gestionar el código fuente.
+Beneficios: Trabajo colaborativo y control de versiones.
+
+Postman
+Herramienta para probar APIs.
+Beneficios: Facilita testing y documentación de endpoints.
