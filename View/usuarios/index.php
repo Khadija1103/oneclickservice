@@ -16,36 +16,31 @@ $result = $ctrl->listar();
       font-family: Arial, sans-serif;
       background-color: #f8f9fa;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-<<<<<<< HEAD
-=======
-    .navbar {
-      background-color: #007bff;
-      overflow: hidden;
-      padding: 10px 0;
+    nav {
+      background-color: #1565c0;
+      padding: 10px;
       text-align: center;
     }
-    .navbar a {
-      display: inline-block;
+    nav a {
       color: white;
-      padding: 10px 20px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
-    .navbar a:hover {
-      background-color:rgb(120, 180, 239);
+    nav a:hover {
+      text-decoration: underline;
     }
->>>>>>> main
     h1 {
       text-align: center;
       color: #333;
-      margin-bottom: 20px;
+      margin-top: 30px;
     }
     .crear-btn {
       display: block;
       width: 200px;
-      margin: 0 auto 20px auto;
+      margin: 20px auto;
       padding: 10px;
       background-color: #007bff;
       color: white;
@@ -58,10 +53,10 @@ $result = $ctrl->listar();
       background-color: #0056b3;
     }
     table {
-      width: 100%;
+      width: 90%;
+      margin: 0 auto 50px auto;
       border-collapse: collapse;
       background-color: #fff;
-      margin-top: 20px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     th, td {
@@ -70,11 +65,7 @@ $result = $ctrl->listar();
       text-align: center;
     }
     th {
-<<<<<<< HEAD
-      background-color: #343a40;
-=======
-      background-color:rgb(47, 136, 220);
->>>>>>> main
+      background-color: #1e88e5;
       color: white;
     }
     tr:nth-child(even) {
@@ -84,7 +75,6 @@ $result = $ctrl->listar();
       background-color: #e9ecef;
     }
     .btn-editar, .btn-eliminar {
-      display: inline-block;
       padding: 6px 12px;
       margin: 2px;
       font-size: 14px;
@@ -110,54 +100,58 @@ $result = $ctrl->listar();
   </style>
 </head>
 <body>
-<<<<<<< HEAD
-=======
 
-  <div class="navbar">
-  <div class="navbar">
-    <a href="http://localhost/oneclickservice-master/main.php">Inicio</a>
-    <a href="http://localhost/oneclickservice-master/index.php">Proveedores</a>
-    <a href="http://localhost/oneclickservice-master/View/reservas/index.php">Reservas</a>
-    <a href="http://localhost/oneclickservice-master/View/servicios/index.php">Servicios</a>
-  </div>
-  </div>
+<nav>
+  <a href="../../main.php">Inicio</a>
+  <a href="../../index.php">Proveedores</a>
+  <a href="../reservas/index.php">Reservas</a>
+  <a href="../servicios/index.php">Servicios</a>
+  <a href="#">Usuarios</a>
+  <a href="http://localhost/oneclickservice-master/auth/logout.php" class="cerrar-sesion">Cerrar sesión</a>
+</nav>
 
->>>>>>> main
-  <h1>Lista de Usuarios</h1>
-  <a href="crear.php" class="crear-btn">+ Crear Usuario</a>
+<h1>Lista de Usuarios</h1>
 
-  <table>
-    <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Acciones</th></tr>
-    <?php while ($u = $result->fetch_assoc()): ?>
-    <tr>
-      <td><?= $u['id'] ?></td>
-      <td><?= htmlspecialchars($u['nombre']) ?></td>
-      <td><?= htmlspecialchars($u['correo']) ?></td>
-      <td>
-        <a href="editar.php?id=<?= $u['id'] ?>" class="btn-editar">Editar</a>
-        <button class="btn-eliminar" onclick="confirmarEliminacion(<?= $u['id'] ?>)">Eliminar</button>
-      </td>
-    </tr>
-    <?php endwhile; ?>
-  </table>
+<a href="crear.php" class="crear-btn">+ Crear Usuario</a>
 
-  <script>
-    function confirmarEliminacion(id) {
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¡Este usuario será eliminado permanentemente!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#dc3545',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = 'eliminar.php?id=' + id;
-        }
-      });
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Correo</th>
+    <th>Acciones</th>
+  </tr>
+  <?php while ($u = $result->fetch_assoc()): ?>
+  <tr>
+    <td><?= $u['id'] ?></td>
+    <td><?= htmlspecialchars($u['nombre']) ?></td>
+    <td><?= htmlspecialchars($u['correo']) ?></td>
+    <td>
+      <a href="editar.php?id=<?= $u['id'] ?>" class="btn-editar">Editar</a>
+      <button class="btn-eliminar" onclick="confirmarEliminacion(<?= $u['id'] ?>)">Eliminar</button>
+    </td>
+  </tr>
+  <?php endwhile; ?>
+</table>
+
+<script>
+function confirmarEliminacion(id) {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "¡Este usuario será eliminado permanentemente!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#dc3545',
+    cancelButtonColor: '#6c757d',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = 'eliminar.php?id=' + id;
     }
-  </script>
+  });
+}
+</script>
+
 </body>
 </html>

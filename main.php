@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>One Click Service - Inicio</title>
   <style>
+    /* Estilos generales */
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f4;
@@ -13,7 +14,7 @@
       color: #333;
     }
 
-    /* Mensaje bienvenida separado */
+    /* Mensaje de bienvenida */
     .welcome-message {
       text-align: center;
       margin: 40px 0 30px 0;
@@ -28,7 +29,7 @@
       font-weight: 500;
     }
 
-    /* Navbar centrado con enlaces */
+    /* Barra de navegación */
     .navbar {
       display: flex;
       justify-content: center;
@@ -51,7 +52,7 @@
       color:rgb(139, 182, 228);
     }
 
-    /* Carrusel */
+    /* Carrusel de imágenes */
     .carousel {
       max-width: 900px;
       margin: 0 auto 50px auto;
@@ -95,7 +96,7 @@
       background-color: #007bff;
     }
 
-    /* Sección corporación BÁRAKA */
+    /* Sección Corporación BÁRAKA */
     .corporacion-section {
       max-width: 900px;
       margin: 0 auto 50px auto;
@@ -129,7 +130,7 @@
       color: #444;
     }
 
-    /* Sección promociones, proveedor y cliente del mes en fila */
+    /* Sección estadísticas */
     .stats-section {
       max-width: 900px;
       margin: 0 auto;
@@ -163,7 +164,7 @@
       color: #555;
     }
 
-    /* Sección de llamada a la acción */
+    /* Sección CTA */
     .cta-section {
       max-width: 900px;
       margin: 60px auto 20px auto;
@@ -186,22 +187,21 @@
 </head>
 <body>
 
-  <!-- Bienvenida -->
+  <!-- Sección de bienvenida -->
   <section class="welcome-message">
     <h1>Bienvenido a One Click Service</h1>
     <p style="color: black; font-size: 1.2rem; margin-top: 5px;">
-    Tu plataforma para conectar con los mejores proveedores y servicios
-  </p>
+      Tu plataforma para conectar con los mejores proveedores y servicios
+    </p>
   </section>
 
-  <!-- Navbar de inicio / registro -->
+  <!-- Navegación -->
   <nav class="navbar" role="navigation" aria-label="Menú principal">
-    <a href="http://localhost/oneclickservice-master/auth/logout.php">Iniciar Sesión</a>
-    <a href="http://localhost/oneclickservice-master/auth/register.php">Registrarse</a>
-
+  <a href="http://localhost/oneclickservice-master/auth/login.php">Iniciar Sesión</a>
+  <a href="http://localhost/oneclickservice-master/auth/register.php">Registrarse</a>
   </nav>
 
-  <!-- Carrusel -->
+  <!-- Carrusel de imágenes -->
   <section class="carousel" aria-label="Carrusel de imágenes felices y servicios">
     <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=80" alt="Familia feliz" class="active" />
     <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=900&q=80" alt="Aseadora laborando" />
@@ -213,7 +213,7 @@
     </div>
   </section>
 
-  <!-- Sección corporación BÁRAKA -->
+  <!-- Información sobre la Corporación BÁRAKA -->
   <section class="corporacion-section" aria-label="Corporación BÁRAKA">
     <div class="corporacion-logos">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Star_and_Crescent.svg/1200px-Star_and_Crescent.svg.png" alt="Logo Corporación BÁRAKA" />
@@ -225,19 +225,20 @@
     </div>
   </section>
 
-  <!-- Sección promociones, proveedor y cliente del mes -->
+  <!-- Sección de estadísticas -->
   <section class="stats-section" aria-label="Estadísticas y promociones">
-  <div class="stats-card" aria-label="Proveedor del mes">
-  <h3>Proveedor del Mes</h3>
-  <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80" alt="Proveedor del mes" />
-  <p>Reconocemos al proveedor destacado que ha ofrecido servicios de calidad y compromiso.</p>
-</div>
+    <div class="stats-card" aria-label="Proveedor del mes">
+      <h3>Proveedor del Mes</h3>
+      <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80" alt="Proveedor del mes" />
+      <p>Reconocemos al proveedor destacado que ha ofrecido servicios de calidad y compromiso.</p>
+    </div>
 
     <div class="stats-card" aria-label="Cliente del mes">
       <h3>Cliente del Mes</h3>
       <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80" alt="Cliente del mes" />
       <p>Felicidades al cliente más activo y confiable de nuestra plataforma.</p>
     </div>
+
     <div class="stats-card" aria-label="Promociones">
       <h3>Promociones</h3>
       <img src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?auto=format&fit=crop&w=600&q=80" alt="Promociones" />
@@ -250,6 +251,7 @@
     <p>Apoya a la Corporación BÁRAKA con tu contratación de servicios.</p>
   </section>
 
+  <!-- Script del carrusel -->
   <script>
     const images = document.querySelectorAll('.carousel img');
     const indicators = document.querySelectorAll('.carousel-indicators span');
@@ -265,13 +267,13 @@
       currentIndex = index;
     }
 
-    // Auto slide cada 4 segundos
+    // Cambia de imagen cada 4 segundos
     let slideInterval = setInterval(() => {
       let nextIndex = (currentIndex + 1) % images.length;
       showSlide(nextIndex);
     }, 4000);
 
-    // Controlar clic en indicadores
+    // Control manual con clic o teclado
     indicators.forEach((indicator, i) => {
       indicator.addEventListener('click', () => {
         clearInterval(slideInterval);
@@ -284,8 +286,14 @@
         }
       });
     });
+
+    // Función vacía para evitar errores si no se define mostrarLogin()
+    function mostrarLogin() {
+      alert("Funcionalidad de login aún no implementada.");
+    }
   </script>
 
 </body>
 </html>
+
 

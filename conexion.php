@@ -1,17 +1,16 @@
 <?php
-// conexion.php — conexión única a la base donde ya tienes tus tablas
+// conexion.php
 
-$servidor   = "localhost";      // servidor MySQL
-$usuario    = "root";           // usuario MySQL
-$contrasena = "";               // contraseña MySQL (vacía por defecto en XAMPP)
-$basedatos  = "crud_usuarios";  // <-- cambia aquí al nombre real de tu base
+$host = "localhost";
+$usuario = "root";
+$contrasena = "";
+$base_datos = "crud_usuarios"; // ← CORREGIDO
 
-// Crear la conexión
-$conn = new mysqli($servidor, $usuario, $contrasena, $basedatos);
+// Crear conexión
+$conn = new mysqli($host, $usuario, $contrasena, $base_datos);
 
-// Verificar la conexión
+// Verificar conexión
 if ($conn->connect_error) {
-    die("🔌 Conexión fallida a la base de datos '{$basedatos}': " . $conn->connect_error);
+    die("Conexión fallida: " . $conn->connect_error);
 }
-// ¡Conexión exitosa!
 ?>

@@ -4,7 +4,12 @@
 require_once __DIR__ . '/../Controllers/ProveedoresControllers.php';
 
 $controller = new ProveedoresControllers();
-$controller->crearProveedor();  // Este método **existe** ahora en el controlador
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controller->crearProveedor();
+    header("Location: ../index.php");  // Redirige a la lista
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,7 +17,6 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
   <meta charset="UTF-8">
   <title>Crear Proveedor</title>
   <style>
-    /* Estilos iguales a los anteriores */
     body { font-family: Arial; background:#f4f4f4; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
     .form-container { background:#fff; padding:30px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1); width:90%; max-width:500px; }
     h1 { text-align:center; color:#28a745; }
@@ -30,17 +34,6 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
     <h1>Crear Proveedor</h1>
     <form method="POST" action="">
       <label>Nombre:</label>
-<<<<<<< HEAD
-      <input type="text" name="nombre" required>
-      <label>Correo:</label>
-      <input type="email" name="correo" required>
-      <label>Teléfono:</label>
-      <input type="text" name="telefono" required>
-      <label>Dirección:</label>
-      <input type="text" name="direccion" required>
-      <label>Tipo de Servicio:</label>
-      <input type="text" name="tipo_servicio" required>
-=======
       <input type="text" name="nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}" title="Mínimo 3 letras. Solo letras y espacios.">
 
       <label>Correo:</label>
@@ -50,18 +43,11 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
       <input type="text" name="telefono" required pattern="[0-9]{7,15}" title="Solo números. Mínimo 7 y máximo 15 dígitos.">
 
       <label>Dirección:</label>
-      <input 
-      type="text" 
-       name="direccion" 
-      required 
-       pattern="^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\.,#\-]{5,100}$" 
-       title="Dirección válida: letras, números, espacios, comas, puntos, guiones y #. Mínimo 5 caracteres.">
-
+      <input type="text" name="direccion" required pattern="^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\.,#\-]{5,100}$" title="Dirección válida: letras, números, espacios, comas, puntos, guiones y #. Mínimo 5 caracteres.">
 
       <label>Tipo de Servicio:</label>
       <input type="text" name="tipo_servicio" required pattern=".{4,}" title="Mínimo 4 caracteres.">
 
->>>>>>> main
       <input type="submit" value="Guardar">
     </form>
     <div class="back-link">
@@ -69,11 +55,4 @@ $controller->crearProveedor();  // Este método **existe** ahora en el controlad
     </div>
   </div>
 </body>
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 </html>
-
-
-

@@ -1,205 +1,154 @@
+<?php
+// Conexión a la base de datos
+require_once '../conexion.php';
+
+$errores = [];
+$exito = false;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = trim($_POST["nombre"]);
+    $correo = trim($_POST["correo"]);
+    $telefono = trim($_POST["telefono"]);
+    $tipo_usuario = $_POST["tipo_usuario"];
+    $contrasena = $_POST["contrasena"];
+
+    // Validaciones del formulario
+    if (!preg_match("/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}$/", $nombre)) {
+        $errores['nombre'] = "El nombre debe tener al menos 3 letras.";
+    }
+    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        $errores['correo'] = "Correo inválido.";
+    }
+    if (!preg_match("/^[0-9]{7,15}$/", $telefono)) {
+        $errores['telefono'] = "Teléfono inválido.";
+    }
+    if (!in_array($tipo_usuario, ['Administrador', 'Proveedor', 'Cliente'])) {
+        $errores['tipo_usuario'] = "Seleccione un tipo válido.";
+    }
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $contrasena)) {
+        $errores['contrasena'] = "Contraseña débil (mínimo 8 caracteres, mayúscula, minúscula, número y símbolo).";
+    }
+
+    // Si todo está correcto, se inserta en la base de datos
+    if (empty($errores)) {
+        $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+        $stmt = $conn->prepare("INSERT INTO usuarios (nombre, correo, telefono, rol, contraseña) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $nombre, $correo, $telefono, $tipo_usuario, $hash);
+
+        if ($stmt->execute()) {
+            $exito = true;
+            header("Location: login.php"); // Redirige al login
+            exit;
+        } else {
+            $errores['general'] = "Error al registrar. Intenta de nuevo.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro - One Click Service</title>
+  <title>Registro de Usuario</title>
+
+  <!-- Carga de CSS externo (asegúrate que esta ruta sea correcta) -->
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <!-- Estilos básicos en caso de que no tengas styles.css -->
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background: #f4f4f4;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      margin: 0;
     }
-
-    .container {
-      background: white;
-      padding: 40px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 800px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
     }
-
-    h2 {
-      text-align: center;
-      color: #007BFF;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
     input, select {
       width: 100%;
       padding: 10px;
-      border: 2px solid #ccc;
+      margin-top: 5px;
+      border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 16px;
     }
-
-    input:focus, select:focus {
-      outline: none;
-    }
-
-    .error {
-      border-color: red !important;
-    }
-
-    .valid {
-      border-color: green !important;
-    }
-
-    .error-message {
-      color: red;
-      font-size: 13px;
-      position: absolute;
-      bottom: -18px;
-      left: 0;
-      display: none;
-    }
-
-    .btn {
-      background-color: #007BFF;
-      color: white;
-      padding: 12px;
-      width: 100%;
+    input[type="submit"] {
+      background: #007bff;
+      color: #fff;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      padding: 12px;
+      margin-top: 20px;
       cursor: pointer;
     }
-
-    .btn:hover {
-      background-color: #0056b3;
+    input[type="submit"]:hover {
+      background: #0056b3;
     }
+    .error { color: red; font-size: 0.9em; margin-top: 5px; }
+    .success { color: green; font-weight: bold; }
+    h1 { text-align: center; color: #007bff; }
+    .back-link { text-align: center; margin-top: 15px; }
   </style>
 </head>
+
 <body>
+  <div class="form-container">
+    <h1>Formulario de Registro</h1>
 
-<div class="container">
-  <h2>Formulario de Registro</h2>
-  <form id="registerForm" novalidate>
-    
-    <div class="form-group">
-      <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" name="nombre">
-      <div class="error-message" id="errorNombre">Por favor, ingresa un nombre válido (mínimo 3 letras).</div>
-    </div>
+    <?php if (!empty($errores['general'])): ?>
+      <p class="error"><?= $errores['general'] ?></p>
+    <?php endif; ?>
 
-    <div class="form-group">
-      <label for="email">Correo electrónico</label>
-      <input type="email" id="email" name="email">
-      <div class="error-message" id="errorEmail">Correo electrónico inválido.</div>
-    </div>
+    <form method="POST" action="">
+      <!-- Nombre -->
+      <label>Nombre completo:</label>
+      <input type="text" name="nombre" value="<?= $_POST['nombre'] ?? '' ?>" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}" title="Mínimo 3 letras. Solo letras y espacios.">
+      <?php if (isset($errores['nombre'])) echo "<div class='error'>{$errores['nombre']}</div>"; ?>
 
-    <div class="form-group">
-      <label for="telefono">Teléfono</label>
-      <input type="text" id="telefono" name="telefono">
-      <div class="error-message" id="errorTelefono">Número de teléfono inválido (mínimo 7 números).</div>
-    </div>
+      <!-- Correo -->
+      <label>Correo electrónico:</label>
+      <input type="email" name="correo" value="<?= $_POST['correo'] ?? '' ?>" required>
+      <?php if (isset($errores['correo'])) echo "<div class='error'>{$errores['correo']}</div>"; ?>
 
-    <div class="form-group">
-      <label for="tipo">Tipo de usuario</label>
-      <select id="tipo" name="tipo">
-        <option value="">Seleccione una opción</option>
-        <option value="usuario">Usuario</option>
-        <option value="proveedor">Proveedor</option>
+      <!-- Teléfono -->
+      <label>Teléfono:</label>
+      <input type="text" name="telefono" value="<?= $_POST['telefono'] ?? '' ?>" required pattern="[0-9]{7,15}" title="Solo números. Mínimo 7 y máximo 15 dígitos.">
+      <?php if (isset($errores['telefono'])) echo "<div class='error'>{$errores['telefono']}</div>"; ?>
+
+      <!-- Tipo de Usuario -->
+      <label>Tipo de usuario:</label>
+      <select name="tipo_usuario" required>
+        <option value="">Seleccione...</option>
+        <option value="Administrador" <?= ($_POST['tipo_usuario'] ?? '') == "Administrador" ? 'selected' : '' ?>>Administrador</option>
+        <option value="Proveedor" <?= ($_POST['tipo_usuario'] ?? '') == "Proveedor" ? 'selected' : '' ?>>Proveedor</option>
+        <option value="Cliente" <?= ($_POST['tipo_usuario'] ?? '') == "Cliente" ? 'selected' : '' ?>>Cliente</option>
       </select>
-      <div class="error-message" id="errorTipo">Debes seleccionar un tipo de usuario.</div>
+      <?php if (isset($errores['tipo_usuario'])) echo "<div class='error'>{$errores['tipo_usuario']}</div>"; ?>
+
+      <!-- Contraseña -->
+      <label>Contraseña:</label>
+      <input type="password" name="contrasena" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.">
+      <?php if (isset($errores['contrasena'])) echo "<div class='error'>{$errores['contrasena']}</div>"; ?>
+
+      <!-- Botón -->
+      <input type="submit" value="Registrarse">
+    </form>
+
+    <!-- Enlace al inicio -->
+    <div class="back-link">
+      <a href="http://localhost/oneclickservice-master/main.php">← Volver al inicio</a>
     </div>
-
-    <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" name="password">
-      <div class="error-message" id="errorPassword">
-        La contraseña debe tener entre 8 y 12 caracteres, incluir mayúscula, minúscula, número y símbolo.
-      </div>
-    </div>
-
-    <button type="submit" class="btn">Registrarse</button>
-  </form>
-</div>
-
-<script>
-  const form = document.getElementById('registerForm');
-
-  const campos = {
-    nombre: {
-      input: document.getElementById('nombre'),
-      error: document.getElementById('errorNombre'),
-      validar: value => /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,}$/.test(value)
-    },
-    email: {
-      input: document.getElementById('email'),
-      error: document.getElementById('errorEmail'),
-      validar: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-    },
-    telefono: {
-      input: document.getElementById('telefono'),
-      error: document.getElementById('errorTelefono'),
-      validar: value => /^[0-9]{7,15}$/.test(value)
-    },
-    tipo: {
-      input: document.getElementById('tipo'),
-      error: document.getElementById('errorTipo'),
-      validar: value => value !== ''
-    },
-    password: {
-      input: document.getElementById('password'),
-      error: document.getElementById('errorPassword'),
-      validar: value => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,12}$/.test(value)
-    }
-  };
-
-  Object.values(campos).forEach(({ input, error, validar }) => {
-    input.addEventListener('input', () => {
-      const valor = input.value.trim();
-      if (validar(valor)) {
-        input.classList.remove('error');
-        input.classList.add('valid');
-        error.style.display = 'none';
-      } else {
-        input.classList.remove('valid');
-        input.classList.add('error');
-        error.style.display = 'block';
-      }
-    });
-  });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    let valido = true;
-
-    Object.values(campos).forEach(({ input, error, validar }) => {
-      const valor = input.value.trim();
-      if (!validar(valor)) {
-        input.classList.remove('valid');
-        input.classList.add('error');
-        error.style.display = 'block';
-        valido = false;
-      }
-    });
-
-    if (valido) {
-      alert("Formulario válido ✅ (Aquí se puede enviar al servidor)");
-      // Aquí puedes hacer el fetch o submit con PHP
-    }
-  });
-</script>
-
+  </div>
 </body>
 </html>
-
 
 
 
