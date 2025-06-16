@@ -1,48 +1,85 @@
 <?php
-header('Content-Type: application/json');
+header("Content-Type: application/json");
 
-// Solo aceptar método POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['mensaje' => 'Método no permitido']);
+// Conexión a la base de datos
+$host = "localhost";
+$usuario = "root";
+$contrasena = "";
+$base_de_datos = "crud_usuarios";
+
+$conn = new mysqli($host, $usuario, $contrasena, $base_de_datos);
+
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(["mensaje" => "❌ Error de conexión a la base de datos"]);
     exit;
 }
 
-// Conexión a base de datos
-require_once '../conexion.php';
-
-// Leer datos JSON enviados
+// Leer datos JSON
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Verificar que recibimos todos los datos necesarios
-if (!isset($data['nombre'], $data['correo'], $data['contraseña'], $data['rol'])) {
+$nombre     = trim($data["nombre"] ?? '');
+$correo     = trim($data["correo"] ?? '');
+$telefono   = trim($data["telefono"] ?? '');
+$rol        = trim($data["rol"] ?? '');
+$contrasena = $data["contrasena"] ?? '';
+
+// Validar campos obligatorios
+if (!$nombre || !$correo || !$telefono || !$rol || !$contrasena) {
     http_response_code(400);
-    echo json_encode(['mensaje' => 'Faltan datos requeridos']);
+    echo json_encode(["mensaje" => "Todos los campos son obligatorios."]);
     exit;
 }
 
-$nombre = $data['nombre'];
-$correo = $data['correo'];
-$contraseña = password_hash($data['contraseña'], PASSWORD_BCRYPT); // Encriptar contraseña
-$rol = $data['rol'];
-
-try {
-    $query = "INSERT INTO usuarios (nombre, correo, contraseña, rol) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssss", $nombre, $correo, $contraseña, $rol);
-
-    if ($stmt->execute()) {
-        http_response_code(201);
-        echo json_encode(['mensaje' => 'Usuario registrado con éxito']);
-    } else {
-        http_response_code(500);
-        echo json_encode(['mensaje' => 'Error al registrar usuario']);
-    }
-
-    $stmt->close();
-    $conn->close();
-
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['mensaje' => 'Error en el servidor', 'error' => $e->getMessage()]);
+// Validar formato de correo
+if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(["mensaje" => "Correo electrónico no válido."]);
+    exit;
 }
+
+// Validar si el correo ya existe
+$stmt = $conn->prepare("SELECT id FROM usuarios WHERE correo = ?");
+$stmt->bind_param("s", $correo);
+$stmt->execute();
+$stmt->store_result();
+if ($stmt->num_rows > 0) {
+    http_response_code(409);
+    echo json_encode(["mensaje" => "Ya existe un usuario con ese correo."]);
+    $stmt->close();
+    exit;
+}
+$stmt->close();
+
+// Validar si el teléfono ya existe
+$stmt = $conn->prepare("SELECT id FROM usuarios WHERE telefono = ?");
+$stmt->bind_param("s", $telefono);
+$stmt->execute();
+$stmt->store_result();
+if ($stmt->num_rows > 0) {
+    http_response_code(409);
+    echo json_encode(["mensaje" => "Ya existe un usuario con ese teléfono."]);
+    $stmt->close();
+    exit;
+}
+$stmt->close();
+
+// Insertar usuario
+$hash = password_hash($contrasena, PASSWORD_DEFAULT);
+$stmt = $conn->prepare("INSERT INTO usuarios (nombre, correo, telefono, rol, contraseña) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("sssss", $nombre, $correo, $telefono, $rol, $hash);
+
+if ($stmt->execute()) {
+    http_response_code(201);
+    echo json_encode(["mensaje" => "✅ Usuario registrado correctamente."]);
+} else {
+    http_response_code(500);
+    echo json_encode([
+        "mensaje" => "❌ Error al registrar el usuario.",
+        "error" => $stmt->error
+    ]);
+}
+
+$stmt->close();
+$conn->close();
+?>

@@ -126,12 +126,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <p class="error"><?= $error ?></p>
     <?php endif; ?>
 
-    <form method="POST" action="">
+    <form method="POST" action="" autocomplete="off">
       <label for="correo">Correo:</label>
-      <input type="email" name="correo" id="correo" required>
+      <input type="email" name="correo" id="correo" required autocomplete="username">
 
       <label for="contrasena">Contraseña:</label>
-      <input type="password" name="contrasena" id="contrasena" required>
+      <input type="password" name="contrasena" id="contrasena" required autocomplete="new-password">
 
       <input type="submit" value="Ingresar">
     </form>
