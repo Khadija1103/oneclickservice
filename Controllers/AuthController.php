@@ -3,68 +3,50 @@
 
 require_once __DIR__ . '/../conexion.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre     = trim($_POST['nombre'] ?? '');
-    $correo     = trim($_POST['correo'] ?? '');
-    $rol        = trim($_POST['tipo_usuario'] ?? '');
-    $contrasena = trim($_POST['contrasena'] ?? '');
+// Verificar si ya hay una sesión iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    if ($nombre && $correo && $rol && $contrasena) {
-        // 🛡 Validar formato de correo
-        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-            echo "⚠️ El correo ingresado no tiene un formato válido.";
-            $conn->close();
-            exit;
+class AuthController {
+    public function iniciarSesion($correo, $contrasena) {
+        global $conn;
+
+        $correo = trim($correo);
+        $contrasena = trim($contrasena);
+
+        if (!$correo || !$contrasena) {
+            echo "<p style='color:red;'>❌ Todos los campos son obligatorios.</p>";
+            return;
         }
 
-        // 🛡 Validar si ya existe el correo
-        $sqlVerificacion = "SELECT id FROM usuarios WHERE correo = ?";
-        $stmtVerificacion = $conn->prepare($sqlVerificacion);
-        if ($stmtVerificacion) {
-            $stmtVerificacion->bind_param("s", $correo);
-            $stmtVerificacion->execute();
-            $stmtVerificacion->store_result();
+        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE correo = ?");
+        $stmt->bind_param("s", $correo);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
-            if ($stmtVerificacion->num_rows > 0) {
-                echo "⚠️ El correo ya está registrado.";
-                $stmtVerificacion->close();
-                $conn->close();
-                exit;
+        if ($resultado->num_rows === 1) {
+            $usuario = $resultado->fetch_assoc();
+
+            if (!$usuario['verificado']) {
+                echo "<p style='color:orange;'>⚠️ Tu cuenta aún no está verificada. Revisa tu correo.</p>";
+                return;
             }
 
-            $stmtVerificacion->close();
-        } else {
-            echo "❌ Error al preparar la verificación de correo.";
-            $conn->close();
-            exit;
-        }
+            if (password_verify($contrasena, $usuario['contraseña'])) {
+                $_SESSION['usuario_id'] = $usuario['id'];
+                $_SESSION['usuario_nombre'] = $usuario['nombre'];
+                $_SESSION['rol'] = $usuario['rol'];
 
-        // ✔ Continuar con el registro si pasa validación
-        $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO usuarios (nombre, correo, contraseña, rol) VALUES (?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-
-        if ($stmt) {
-            $stmt->bind_param("ssss", $nombre, $correo, $contrasenaHash, $rol);
-
-            if ($stmt->execute()) {
-                header("Location: ../index.php?registro=ok");
+                header("Location: ../dashboard.php");
                 exit;
             } else {
-                echo "❌ Error al registrar: " . $stmt->error;
+                echo "<p style='color:red;'>❌ Contraseña incorrecta.</p>";
             }
-
-            $stmt->close();
         } else {
-            echo "❌ Error preparando consulta SQL.";
+            echo "<p style='color:red;'>❌ El usuario no existe.</p>";
         }
 
-        $conn->close();
-    } else {
-        echo "⚠️ Todos los campos son obligatorios.";
-        $conn->close();
-        exit;
+        $stmt->close();
     }
 }
-?>

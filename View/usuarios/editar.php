@@ -80,12 +80,6 @@ if (!$data) { echo "Usuario no encontrado."; exit; }
   <h1>Editar Usuario #<?= $id ?></h1>
   <form method="POST" action="">
     <label>Nombre:</label>
-<<<<<<< HEAD
-    <input type="text" name="nombre" value="<?= htmlspecialchars($data['nombre']) ?>" required>
-
-    <label>Correo:</label>
-    <input type="email" name="correo" value="<?= htmlspecialchars($data['correo']) ?>" required>
-=======
     <input 
       type="text" 
       id="nombre" 
@@ -95,7 +89,6 @@ if (!$data) { echo "Usuario no encontrado."; exit; }
       pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,50}$" 
       maxlength="50"
       title="El nombre debe tener entre 3 y 50 letras, solo caracteres alfabéticos y espacios.">
-
 
     <label>Correo:</label>
     <input 
@@ -107,7 +100,6 @@ if (!$data) { echo "Usuario no encontrado."; exit; }
       maxlength="100"
       pattern="^[\w\.-]+@[\w\.-]+\.\w{2,}$"
       title="Ingresa un correo electrónico válido.">
->>>>>>> main
 
     <button type="submit">Actualizar</button>
   </form>
