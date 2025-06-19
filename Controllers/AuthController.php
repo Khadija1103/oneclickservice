@@ -2,11 +2,7 @@
 // Controllers/AuthController.php
 
 require_once __DIR__ . '/../conexion.php';
-
-// Verificar si ya hay una sesión iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
 class AuthController {
     public function iniciarSesion($correo, $contrasena) {

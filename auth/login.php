@@ -22,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["nombre"] = $nombre;
             $_SESSION["rol"] = $rol;
 
-            // Redirigir según el rol
             switch ($rol) {
                 case 'admin':
                     header("Location: ../dashboard/admin.php");
@@ -34,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: ../dashboard/usuario.php");
                     break;
                 default:
-                    header("Location: ../index.php"); // Rol desconocido
+                    header("Location: ../index.php");
                     break;
             }
             exit;
@@ -48,17 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Iniciar sesión - One Click Service</title>
-
-  <!-- Enlace al archivo de estilos -->
-  <link rel="stylesheet" href="../assets/styles.css">
-
-  <!-- Estilos internos de respaldo -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -116,28 +109,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       text-align: center;
       margin-top: 15px;
     }
+    .back-link a {
+      display: block;
+      margin-top: 8px;
+      color: #007bff;
+      text-decoration: none;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h1>Iniciar sesión</h1>
-
     <?php if (!empty($error)): ?>
       <p class="error"><?= $error ?></p>
     <?php endif; ?>
 
     <form method="POST" action="" autocomplete="off">
       <label for="correo">Correo:</label>
-      <input type="email" name="correo" id="correo" required autocomplete="username">
+      <input type="email" name="correo" id="correo" required>
 
       <label for="contrasena">Contraseña:</label>
-      <input type="password" name="contrasena" id="contrasena" required autocomplete="new-password">
+      <input type="password" name="contrasena" id="contrasena" required>
 
       <input type="submit" value="Ingresar">
     </form>
 
     <div class="back-link">
-      <a href="register.php">¿No tienes cuenta? Regístrate</a><br>
+      <a href="register.php">¿No tienes cuenta? Regístrate</a>
+      <a href="olvide.php">¿Olvidaste tu contraseña?</a>
       <a href="http://localhost/oneclickservice-master/main.php">← Volver al inicio</a>
     </div>
   </div>
